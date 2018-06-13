@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-Optimized GA by Andrew Zhu and Darsh Lin using pyeasyga skeleton
+Optimized Genetic Algorithm by Andrew Zhu and Darsh Lin using pyeasyga skeleton
 """
 
 import random
