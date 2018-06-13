@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    pyeasyga module
-    __author__ = 'Ayodeji Remi-Omosowon'
-
+Optimized GA by Andrew Zhu and Darsh Lin using pyeasyga skeleton
 """
 
 import random
@@ -21,7 +19,7 @@ class GeneticAlgorithm(object):
     A simple example of usage:
 
     >>> # Select only two items from the list and maximise profit
-    >>> from pyeasyga.firstga import GeneticAlgorithm
+    >>> from pyeasyga.modifiedga import GeneticAlgorithm
     >>> input_data = [('pear', 50), ('apple', 35), ('banana', 40)]
     >>> easyga = GeneticAlgorithm(input_data)
     >>> def fitness (member, data):
@@ -36,10 +34,10 @@ class GeneticAlgorithm(object):
 
     def __init__(self,
                  seed_data,
-                 population_size=100,
-                 generations=50,
-                 crossover_probability=0.8,
-                 mutation_probability=0.2,
+                 population_size=50,
+                 generations=100,
+                 crossover_probability=1,
+                 mutation_probability=0.5,
                  elitism=True,
                  maximise_fitness=True):
 
@@ -53,7 +51,10 @@ class GeneticAlgorithm(object):
         :param float mutation_probability: probability of mutation operation
 
         """
+        self.converge_max = 10
         self.counter = 0
+        self.previous_generation_fitness = 0
+        self.converge_counter = 0
         self.seed_data = seed_data
         self.population_size = population_size
         self.generations = generations
@@ -194,6 +195,10 @@ class GeneticAlgorithm(object):
         self.create_new_population()
         self.calculate_population_fitness()
         self.rank_population()
+        if self.current_generation[0].fitness == self.previous_generation_fitness and \
+                self.current_generation[0].fitness > 0:
+            self.converge_counter += 1
+        self.previous_generation_fitness = copy.deepcopy(self.current_generation[0].fitness)
 
     def run(self):
         """Run (solve) the Genetic Algorithm."""
@@ -201,12 +206,15 @@ class GeneticAlgorithm(object):
 
         for _ in range(1, self.generations): # underscore is counter
             self.create_next_generation()
+            if self.converge_counter >= self.converge_max:
+                break
 
     def best_individual(self):
         """Return the individual with the best fitness in the current
         generation.
         """
         best = self.current_generation[0]
+
         return (best.fitness, best.genes)
 
     def get_best_genes(self):
