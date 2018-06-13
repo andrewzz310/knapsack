@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
     pyeasyga module
-    __author__ = 'Ayodeji Remi-Omosowon'
-
+    https://pypi.org/project/pyeasyga/
 """
+
 
 import random
 import copy
