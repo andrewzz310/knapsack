@@ -1,7 +1,7 @@
 '''
 Andrew Zhu and Darsh Lin
 Comparison of different knapsack algorithms
-with google dynamic programming knapsacksolver and pyeasyga skeleton
+with google dynamic programming knapsacksolve. genetic algorithm, and our own modified genetic algorithm
 '''
 
 
